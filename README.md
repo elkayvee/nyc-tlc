@@ -7,10 +7,13 @@ The Analyses exercise is done in the online jupyter notebook even though it migh
 
 The following python scripts are utilized:
 
-download_data.py
-data_processing.py
-create_sqlite.py
-load_sqlite.py
+download_data.py  
+
+data_processing.py  
+
+create_sqlite.py  
+
+load_sqlite.py  
 
 The jupyter notebook for analyses:
 
