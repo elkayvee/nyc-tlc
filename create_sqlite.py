@@ -80,7 +80,9 @@ create_view_nyc_dataPlus_sql = """CREATE VIEW nyc_dataPlus (total_amount, trip_d
 create_table_weather_sql = """CREATE TABLE nyc_weather (
     DATE TEXT, 
     PRCP FLOAT, 
-    SNOW FLOAT);""" 
+    SNOW FLOAT,
+    SNOW_LEVEL BIGINT,
+    PRCP_LEVEL BIGINT);""" 
 
 table_name = 'nyc_weather'
 
@@ -222,6 +224,15 @@ if not nyc_db.execute("SELECT name FROM sqlite_master WHERE type='view' AND name
     nyc_db.execute(create_view_location_sql)
 else:
     print("view {} already exists!".format(view_name))
+    
+#################### INDEX
+
+nyc_db.execute("CREATE INDEX snow ON nyc_weather (DATE, SNOW_LEVEL);")
+nyc_db.execute("CREATE INDEX rain ON nyc_weather (DATE, PRCP_LEVEL);")
+nyc_db.execute("CREATE INDEX trip ON nyc_data (car_type, pickup_year, pickup_month, payment_type);")
+nyc_db.execute("CREATE INDEX location ON nyc_data (car_type, pickup_year, pickup_month, pulocationid, dolocationid);")
+
+###################
 
 nyc_db.execute("PRAGMA table_info(nyc_data);").fetchall()
 nyc_db.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()
